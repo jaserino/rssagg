@@ -29,9 +29,14 @@ func main() {
 		ExposedHeaders:   []string{"Link"},
 		AllowCredentials: false,
 		MaxAge:           300, 
-
-		
 	  }))
+
+	v1Router := chi.NewRouter()
+	v1Router.Get("/ready", handlerReadiness)
+	v1Router.Get("/err",handlerErr)
+
+
+	r.Mount("/v1", v1Router)
 
 	// connecting router to http server
 	srv := &http.Server {
